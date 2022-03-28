@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { Study } = require('../models');
-const { Img } = require('../models');
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const multer = require('multer');
 const { hash } = require('bcrypt');
@@ -55,14 +54,15 @@ router.put("/update", async(req,res) => {
     } 
 
 const randomstring = require("randomstring");
+var count = 0;
 
 const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'uploads/'); //저장할 폴더
     },
-    filename: (req, file, cb) => {
-      var fileName = randomstring.generate(25); // 파일 이름 - 랜덤
+    filename: (req, file, cb) => {     
+      var fileName = randomstring.generate(25);
       var mimeType;
       switch (
         file.mimetype // 파일 타입
@@ -83,7 +83,8 @@ const upload = multer({
           mimeType = "jpg";
           break;
       }
-      cb(null, fileName + "." + mimeType); // 파일 이름 + 파일 타입 형태로 이름 설정
+      //count++;
+      cb(null, fileName+"." + mimeType); // 파일 이름 + 파일 타입 형태로 이름 설정
     },
   }),
   limits: {
@@ -106,7 +107,7 @@ router.post("/", upload.single("img"), async (req, res) => {
         studyText,
         username,
         studyDate,
-        img
+        img,
     });
     res.json(all);
 })

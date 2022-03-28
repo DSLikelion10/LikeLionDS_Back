@@ -10,6 +10,8 @@ const db = require('./models');
 const studyRouter = require('./routes/Study');
 const usersRouter = require('./routes/Users');
 
+app.use(express.static("uploads"));
+
 app.use("/study", studyRouter);
 app.use("/auth", usersRouter);
 // app.use(bodyParser.urlencoded({extended: false}));
