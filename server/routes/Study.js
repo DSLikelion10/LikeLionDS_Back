@@ -54,7 +54,6 @@ router.put("/update", async(req,res) => {
     } 
 
 const randomstring = require("randomstring");
-var count = 0;
 
 const upload = multer({
   storage: multer.diskStorage({
